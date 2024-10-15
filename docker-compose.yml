@@ -1,0 +1,33 @@
+version: '3'
+services:
+  load_balancer:
+    image: nginx:latest
+    volumes:
+      - ./load_balancer/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - "4000:80"
+  
+  instance_manager:
+    build: ./instance_manager
+    ports:
+      - "6000:6000"
+  
+  monitoring:
+    build: ./monitoring
+    ports:
+      - "7000:7000"
+  
+  chaos_engine:
+    build: ./chaos_engine
+    ports:
+      - "8000:8000"
+  
+  instance_1:
+    build: ./service_watermark
+    ports:
+      - "5000:5000"
+
+  instance_2:
+    build: ./service_watermark
+    ports:
+      - "5001:5001"
